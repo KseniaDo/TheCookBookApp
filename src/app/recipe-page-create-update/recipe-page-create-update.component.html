@@ -1,0 +1,53 @@
+<section class="recipe-create-update">
+    <form *ngIf="recipeForm" [formGroup]="recipeForm">
+        <mat-form-field>
+            <mat-label>Введите название рецепта</mat-label>
+            <input 
+                matInput
+                formControlName="inputName">
+        </mat-form-field>
+        <p>Ингредиенты:</p>
+        <div formArrayName="inputIngredients" *ngFor="let inputIngredient of inputIngredients.controls; let i = index">
+            <div [formGroupName]="i">
+                <mat-form-field>
+                    <mat-label>Введите ингредиент</mat-label>
+                    <input matInput formControlName="item">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Введите количество</mat-label>
+                    <input matInput formControlName="amount">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>measure</mat-label>
+                    <mat-select
+                        formControlName="measure"
+                        >
+                        <mat-option *ngFor="let measure of measurements" [value]="measure">
+                            {{measure}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+        <button mat-button (click)="addNewIngredient()">Добавить ингредиент</button>
+        <p>Шаги:</p>
+        <div formArrayName="inputStages" *ngFor="let inputStage of inputStages.controls; let i = index">
+            <div [formGroupName]="i">
+                <mat-form-field>
+                    <mat-label>Введите описание шага</mat-label>
+                    <input matInput formControlName="text">
+                </mat-form-field>
+            </div>
+        </div>
+        <button mat-button (click)="addNewStage()">Добавить шаг</button>
+        <div class="header-menu">
+            <a 
+                mat-button routerLink="/main-page" 
+                routerLinkActive="active" 
+                ariaCurrentWhenActive="page" 
+                color="primary"
+                (click)="showData()"
+                >Сохранить</a>
+          </div>
+    </form>
+</section>

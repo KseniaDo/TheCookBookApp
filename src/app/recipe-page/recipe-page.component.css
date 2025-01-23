@@ -1,0 +1,12 @@
+.test-img {
+    width: 800px;
+    height: 200px;
+
+    background-color: coral;
+}
+
+.recipe-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}

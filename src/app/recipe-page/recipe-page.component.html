@@ -1,0 +1,11 @@
+<mat-card class="recipe-card" *ngIf="cardData !== undefined">
+    <div class="test-img"></div>
+    <mat-card-title>{{ cardData.name }}</mat-card-title>
+    <mat-card-subtitle>{{ cardData.date }}</mat-card-subtitle>
+    <mat-card-content *ngFor="let ingredient of cardData.ingredients">
+        <p>{{ ingredient.item }} {{ ingredient.amount }} {{ ingredient.measure }}</p>
+    </mat-card-content>
+    <mat-card-content *ngFor="let stage of cardData.stages">
+        <p>{{ stage.text }}</p>
+    </mat-card-content>
+</mat-card>

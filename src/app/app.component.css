@@ -1,0 +1,22 @@
+.header-menu {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    width: 300px;
+    height: 40px;
+}
+
+.main-container {
+    /* display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center; */
+    width: 800px;
+}
+
+mat-grid-tile {
+    background: lightblue;
+    /* width: 100px; */
+}
