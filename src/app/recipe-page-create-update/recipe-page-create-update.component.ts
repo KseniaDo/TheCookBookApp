@@ -15,6 +15,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
+import { environment } from 'src/environments/environment.development';
 
 const enum States {
     UNKNOWN,
@@ -48,7 +49,7 @@ export class RecipePageCreateUpdateComponent implements OnInit {
     recipesList?: any[];
 
     async GET() {
-        var client = await createClient(process.env.EDGE_CONFIG, {
+        var client = await createClient(environment.EDGE_CONFIG, {
             cache: 'force-cache',
         }).get("recipes");
         return client;

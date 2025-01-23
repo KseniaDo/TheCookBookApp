@@ -9,6 +9,7 @@ import { MenuComponent } from '../common/menu/menu.component';
 
 import { MatGridListModule } from '@angular/material/grid-list';
 import { RecipeCardComponent } from '../recipe-card/recipe-card.component';
+import { environment } from 'src/environments/environment.development';
 
 @Component({
   selector: 'app-main-page',
@@ -35,7 +36,7 @@ export class MainPageComponent implements OnInit {
     }
     
     async GET() {
-        var client = await createClient(process.env.EDGE_CONFIG, {
+        var client = await createClient(environment.EDGE_CONFIG, {
           cache: 'force-cache',
         }).get("recipes");    
         return client;
