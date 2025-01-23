@@ -10,7 +10,7 @@ import { HeaderComponent } from '../common/header/header.component';
 import { MenuComponent } from '../common/menu/menu.component';
 
 import { MatButtonModule } from '@angular/material/button';
-import {MatSelectModule} from '@angular/material/select';
+import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
@@ -24,22 +24,22 @@ const enum States {
 }
 
 @Component({
-  selector: 'app-recipe-page-create-update',
-  standalone: true,
-  templateUrl: './recipe-page-create-update.component.html',
-  styleUrls: ['./recipe-page-create-update.component.css'],
-  imports: [
-    FormsModule,
-    CommonModule,
-    HeaderComponent,
-    MenuComponent,
-    MatSelectModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatButtonModule,
-    ReactiveFormsModule,
-  ],
-  providers: [DatePipe]
+    selector: 'app-recipe-page-create-update',
+    standalone: true,
+    templateUrl: './recipe-page-create-update.component.html',
+    styleUrls: ['./recipe-page-create-update.component.css'],
+    imports: [
+        FormsModule,
+        CommonModule,
+        HeaderComponent,
+        MenuComponent,
+        MatSelectModule,
+        MatInputModule,
+        MatFormFieldModule,
+        MatButtonModule,
+        ReactiveFormsModule,
+    ],
+    providers: [DatePipe]
 })
 export class RecipePageCreateUpdateComponent implements OnInit {
     private state: States = States.UNKNOWN;
@@ -47,15 +47,15 @@ export class RecipePageCreateUpdateComponent implements OnInit {
     private recipeToEdit!: any;
     private recipeToEditIndex!: any;
     recipesList?: any[];
-    
+
     async GET() {
-        var client = await createClient(environment.EDGE_CONFIG, {
-          cache: 'force-cache',
-        }).get("recipes");    
+        var client = await createClient(process.env.EDGE_CONFIG === undefined ? process.env.EDGE_CONFIG : environment.EDGE_CONFIG, {
+            cache: 'force-cache',
+        }).get("recipes");
         return client;
     }
 
-    constructor(private fb: FormBuilder, private activatedRoute: ActivatedRoute) {}
+    constructor(private fb: FormBuilder, private activatedRoute: ActivatedRoute) { }
 
     // @Input() measurements?: any[];
     measurements = [
@@ -69,9 +69,9 @@ export class RecipePageCreateUpdateComponent implements OnInit {
     ngOnInit(): void {
         var resultGet = this.GET();
         resultGet.then(data => {
-          this.recipesList = JSON.parse(JSON.stringify(data));
-          console.log(this.recipesList);
-          this.linkEditDataId = this.activatedRoute.snapshot.params["id"];
+            this.recipesList = JSON.parse(JSON.stringify(data));
+            console.log(this.recipesList);
+            this.linkEditDataId = this.activatedRoute.snapshot.params["id"];
             this.state = this.linkEditDataId ? States.EDIT : States.CREATE;
             if (this.state == States.EDIT) {
                 this.recipeToEditIndex = this.recipesList?.findIndex(x => x.id == this.linkEditDataId);
@@ -79,8 +79,8 @@ export class RecipePageCreateUpdateComponent implements OnInit {
                 console.log(this.recipeToEdit);
                 this.recipeForm = this.fb.group({
                     inputName: this.recipeToEdit.name,
-                    inputIngredients: this.recipeToEdit.ingredients ? this.fb.array(this.recipeToEdit.ingredients.map((x: any)=>this.getIngredientValuesFromGroup(x))) : [],
-                    inputStages: this.recipeToEdit.stages ? this.fb.array(this.recipeToEdit.stages.map((x: any)=>this.getStagesFromGroup(x))) : [],
+                    inputIngredients: this.recipeToEdit.ingredients ? this.fb.array(this.recipeToEdit.ingredients.map((x: any) => this.getIngredientValuesFromGroup(x))) : [],
+                    inputStages: this.recipeToEdit.stages ? this.fb.array(this.recipeToEdit.stages.map((x: any) => this.getStagesFromGroup(x))) : [],
                 })
             } else {
                 this.recipeForm = this.fb.group({
@@ -88,7 +88,7 @@ export class RecipePageCreateUpdateComponent implements OnInit {
                     inputIngredients: this.fb.array([]),
                     inputStages: this.fb.array([]),
                 })
-        
+
                 const fa = (this.recipeForm.get('inputStages') as FormArray);
                 const fIngr = (this.recipeForm.get('inputIngredients') as FormArray);
                 this.addNewStage();

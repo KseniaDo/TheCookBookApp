@@ -36,7 +36,7 @@ export class MainPageComponent implements OnInit {
     }
     
     async GET() {
-        var client = await createClient(environment.EDGE_CONFIG, {
+        var client = await createClient(process.env.EDGE_CONFIG === undefined ? process.env.EDGE_CONFIG : environment.EDGE_CONFIG, {
           cache: 'force-cache',
         }).get("recipes");    
         return client;
