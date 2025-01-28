@@ -57,7 +57,6 @@ export class RecipePageCreateUpdateComponent implements OnInit {
 
     constructor(private fb: FormBuilder, private activatedRoute: ActivatedRoute) { }
 
-    // @Input() measurements?: any[];
     measurements = [
         "ст.л.",
         "ч.л.",
