@@ -7,6 +7,9 @@ const dotenv = require('dotenv').config({ path: 'src/.env' });;
 const envFile = `export const environment = {
     BLOB_READ_WRITE_TOKEN: '${process.env.BLOB_READ_WRITE_TOKEN}',
     EDGE_CONFIG: '${process.env.EDGE_CONFIG}',
+    USER_TOKEN_AUTH: '${process.env.USER_TOKEN_AUTH}',
+    EDGE_CONFIG_ID: '${process.env.EDGE_CONFIG_ID}',
+    KEY_RECIPE_ELEMENT: '${process.env.KEY_RECIPE_ELEMENT}',
 };
 `;
 const targetPath = path.join(__dirname, './src/environments/environment.development.ts');
