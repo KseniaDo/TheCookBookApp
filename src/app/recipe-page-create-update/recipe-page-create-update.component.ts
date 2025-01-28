@@ -51,7 +51,7 @@ export class RecipePageCreateUpdateComponent implements OnInit {
     async GET() {
         var client = await createClient(environment.EDGE_CONFIG, {
             cache: 'force-cache',
-        }).get("recipes");
+        }).get(environment.KEY_RECIPE_ELEMENT);
         return client;
     }
 
@@ -163,18 +163,18 @@ export class RecipePageCreateUpdateComponent implements OnInit {
         console.log(this.recipesList);
         try {
             const updateEdgeConfig = await fetch(
-                'https://api.vercel.com/v1/edge-config/ecfg_w4sdfgplscisyg1hje0gnqmoaspw/items',
+                `https://api.vercel.com/v1/edge-config/${environment.EDGE_CONFIG_ID}/items`,
                 {
                     method: 'PATCH',
                     headers: {
-                        Authorization: `Bearer wG2YsX0dC2Hee9yL8CYQOIhS`,
+                        Authorization: `Bearer ${environment.USER_TOKEN_AUTH}`,
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
                         items: [
                             {
                                 operation: 'update',
-                                key: 'recipes',
+                                key: environment.KEY_RECIPE_ELEMENT,
                                 value: this.recipesList
                             }
                         ]

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Inject } from '@angular/core';
+import { Component, Input, OnInit, Inject, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterOutlet } from '@angular/router';
 
@@ -8,6 +8,7 @@ import { EdgeConfigValue} from '@vercel/edge-config';
 import {MatDialog, MAT_DIALOG_DATA, MatDialogRef, MatDialogModule} from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
+// import { EventEmitter } from 'stream';
 
 @Component({
   selector: 'app-recipe-card',
@@ -24,6 +25,7 @@ import {MatButtonModule} from '@angular/material/button';
   ]
 })
 export class RecipeCardComponent implements OnInit{
+    @Output() onDeleteSelect: EventEmitter<any> = new EventEmitter();
     deleteCheck: string = 'false';
     constructor(public dialog: MatDialog) {}
     openDialog(): void {
@@ -35,6 +37,8 @@ export class RecipeCardComponent implements OnInit{
             console.log('The dialog was closed');
             this.deleteCheck = result;
             console.log(this.deleteCheck);
+            console.log(this.cardData.id);
+            this.onDeleteSelect.emit(this.cardData.id);
         });
     }
 

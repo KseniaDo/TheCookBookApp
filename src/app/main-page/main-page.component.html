@@ -2,7 +2,7 @@
     <mat-grid-list cols="3" rowHeight="1:1">
         <div>
             <mat-grid-tile *ngFor="let recipeItem of recipesList">
-                <app-recipe-card [cardData]="recipeItem"></app-recipe-card>
+                <app-recipe-card [cardData]="recipeItem" (onDeleteSelect)="deleteRecipe($event)"></app-recipe-card>
             </mat-grid-tile>
         </div>
     </mat-grid-list>

@@ -26,6 +26,7 @@ import { environment } from 'src/environments/environment.development';
 })
 export class MainPageComponent implements OnInit {
     recipesList?: any[];
+    private recipeToDeleteIndex: any;
 
     ngOnInit(): void {
         var resultGet = this.GET();
@@ -38,7 +39,43 @@ export class MainPageComponent implements OnInit {
     async GET() {
         var client = await createClient(environment.EDGE_CONFIG, {
           cache: 'force-cache',
-        }).get("recipes");    
+        }).get(environment.KEY_RECIPE_ELEMENT);    
         return client;
+    }
+
+    async deleteRecipe(data: any) {
+        console.log(data);
+        this.recipeToDeleteIndex = this.recipesList?.findIndex(x => x.id == data);
+        console.log(this.recipeToDeleteIndex);
+        console.log(this.recipesList);
+        if (this.recipeToDeleteIndex > -1) {
+            this.recipesList?.splice(this.recipeToDeleteIndex, 1);
+        }
+        console.log(this.recipesList);
+        try {
+            const updateEdgeConfig = await fetch(
+                `https://api.vercel.com/v1/edge-config/${environment.EDGE_CONFIG_ID}/items`,
+                {
+                    method: 'PATCH',
+                    headers: {
+                        Authorization: `Bearer ${environment.USER_TOKEN_AUTH}`,
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        items: [
+                            {
+                                operation: 'update',
+                                key: environment.KEY_RECIPE_ELEMENT,
+                                value: this.recipesList
+                            }
+                        ]
+                    }),
+                },
+            );
+            const result = await updateEdgeConfig.json();
+            console.log(result);
+        } catch (error) {
+            console.log(error);
+        }
     }
 }

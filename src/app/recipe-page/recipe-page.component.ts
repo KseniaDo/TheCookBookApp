@@ -37,7 +37,7 @@ export class RecipePageComponent implements OnInit {
     async GET() {
         var client = await createClient(environment.EDGE_CONFIG, {
             cache: 'force-cache',
-        }).get("recipes");
+        }).get(environment.KEY_RECIPE_ELEMENT);
         return client;
     }
 
