@@ -46,10 +46,10 @@ export class RegistrationComponent implements OnInit {
     }
 
     onSubmit() {
-        const rawForm = this.registrationForm.getRawValue();
+        var rawForm = this.registrationForm.getRawValue();
         console.log(rawForm);
         this.authService
-            .register(rawForm.inputLogin, rawForm.inputEmail, rawForm.inputPassword)
+            .register(rawForm.inputEmail, rawForm.inputLogin, rawForm.inputPassword)
             .subscribe({
                 next: () => {
                     this.router.navigateByUrl('/');
