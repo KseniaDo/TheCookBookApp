@@ -1,5 +1,5 @@
-<section class="recipe-create-update">
-    <form *ngIf="recipeForm" [formGroup]="recipeForm">
+<section class="section section__recipe-form">
+    <form *ngIf="recipeForm" [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
         <mat-form-field>
             <mat-label>Введите название рецепта</mat-label>
             <input 
@@ -40,14 +40,6 @@
             </div>
         </div>
         <button mat-button (click)="addNewStage()">Добавить шаг</button>
-        <div class="header-menu">
-            <a 
-                mat-button routerLink="/main-page" 
-                routerLinkActive="active" 
-                ariaCurrentWhenActive="page" 
-                color="primary"
-                (click)="showData()"
-                >Сохранить</a>
-          </div>
+        <button mat-flat-button color="primary">Сохранить</button>
     </form>
 </section>

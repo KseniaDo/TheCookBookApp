@@ -1,14 +1,14 @@
-import { Component, Input, OnInit, Inject, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterOutlet } from '@angular/router';
 
 import { CardInformation } from './cardinformation';
-import { EdgeConfigValue} from '@vercel/edge-config';
+import { EdgeConfigValue } from '@vercel/edge-config';
 
-import {MatDialog, MAT_DIALOG_DATA, MatDialogRef, MatDialogModule} from '@angular/material/dialog';
+import { MatDialog, MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card';
-import {MatButtonModule} from '@angular/material/button';
-// import { EventEmitter } from 'stream';
+import { MatButtonModule } from '@angular/material/button';
+import { DialogDeleteComponent } from './dialog-delete.component';
 
 @Component({
   selector: 'app-recipe-card',
@@ -24,37 +24,23 @@ import {MatButtonModule} from '@angular/material/button';
     MatDialogModule,
   ]
 })
-export class RecipeCardComponent implements OnInit{
-    @Output() onDeleteSelect: EventEmitter<any> = new EventEmitter();
-    deleteCheck: string = 'false';
-    constructor(public dialog: MatDialog) {}
-    openDialog(): void {
-        const dialogRef = this.dialog.open(DialogDeleteAccept, {
-            data: {deleteCheck: this.deleteCheck},
-        });
+export class RecipeCardComponent {
+  @Input() cardData!: CardInformation;
+  deleteCheck: string = 'false';
+  @Output() onDeleteSelect: EventEmitter<any> = new EventEmitter();
 
-        dialogRef.afterClosed().subscribe(result => {
-            console.log('The dialog was closed');
-            this.deleteCheck = result;
-            console.log(this.deleteCheck);
-            console.log(this.cardData.id);
-            this.onDeleteSelect.emit(this.cardData.id);
-        });
-    }
+  constructor(public dialog: MatDialog) { }
 
-    @Input() cardData!: CardInformation;
-    ngOnInit(): void {
-        
-    }
-}
+  openDialog(): void {
+    const dialogRef = this.dialog.open(DialogDeleteComponent, {
+      data: { deleteCheck: this.deleteCheck },
+    });
 
-@Component({
-    selector: 'dialog-delete-accept',
-    templateUrl: 'dialog-delete-accept.html',
-    standalone: true,
-    imports: [MatDialogModule, MatButtonModule],
-  })
-export class DialogDeleteAccept {
-    deleteButton: string = 'true';
-    constructor(public dialogRef: MatDialogRef<DialogDeleteAccept>) {}
+    dialogRef.afterClosed().subscribe(result => {
+      this.deleteCheck = result;
+      if (result !== '') {
+        this.onDeleteSelect.emit(this.cardData.id);
+      }
+    });
+  }
 }

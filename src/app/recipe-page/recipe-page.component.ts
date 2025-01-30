@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../common/header/header.component';
-import { MenuComponent } from '../common/menu/menu.component';
 
 import { EdgeConfigValue, get } from '@vercel/edge-config';
 import { createClient } from '@vercel/edge-config';
@@ -22,26 +21,25 @@ import { environment } from 'src/environments/environment.development';
     imports: [
         CommonModule,
         HeaderComponent,
-        MenuComponent,
         MatCardModule,
     ]
 })
 export class RecipePageComponent implements OnInit {
+    cardData!: CardInformation;
     displayedColumns: string[] = ['Ингредиент', 'Количество', 'Единица измерения'];
+    recipesList?: any[];
     private linkEditDataId: string = "";
     private recipeToShow!: any;
     private recipeToShowIndex!: any;
-    recipesList?: any[];
-    cardData!: CardInformation;
+
+    constructor(private activatedRoute: ActivatedRoute) { }
 
     async GET() {
         var client = await createClient(environment.EDGE_CONFIG, {
-            cache: 'force-cache',
+            cache: 'no-store',
         }).get(environment.KEY_RECIPE_ELEMENT);
         return client;
     }
-
-    constructor(private activatedRoute: ActivatedRoute) { }
 
     ngOnInit(): void {
         var resultGet = this.GET();
@@ -50,7 +48,6 @@ export class RecipePageComponent implements OnInit {
             this.linkEditDataId = this.activatedRoute.snapshot.params["id"];
             this.recipeToShowIndex = this.recipesList?.findIndex(x => x.id == this.linkEditDataId);
             this.recipeToShow = this.recipesList![this.recipeToShowIndex!];
-
             this.cardData = {
                 id: this.recipeToShow.id,
                 name: this.recipeToShow.name,

@@ -28,12 +28,12 @@ import { Router } from '@angular/router';
     ]
 })
 export class LoginComponent implements OnInit {
+    authService = inject(AuthService);
+    errorMessage: string | null = null;
     hide = true;
     http = inject(HttpClient);
-    authService = inject(AuthService);
-    router = inject(Router);
     loginForm!: FormGroup;
-    errorMessage: string | null = null;
+    router = inject(Router);
     
     constructor(private fb: FormBuilder) { }
 

@@ -14,9 +14,7 @@ window['process'] = process;
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  constructor() { }
   authService = inject(AuthService)
-  title = 'cookbookapp';
   data = {};
   @Input() menu_items = [
     {
@@ -41,7 +39,7 @@ export class AppComponent implements OnInit {
       }
     });
   }
-  
+
   logout(data: any) {
     if (data == 'true') {
       this.authService.logout();

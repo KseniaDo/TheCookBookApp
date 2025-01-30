@@ -1,10 +1,10 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import {MatIconModule} from '@angular/material/icon';
-import {MatButtonModule} from '@angular/material/button';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 import { environment } from 'src/environments/environment.development';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
@@ -28,13 +28,13 @@ import { Router } from '@angular/router';
     ]
 })
 export class RegistrationComponent implements OnInit {
+    authService = inject(AuthService);
+    errorMessage: string | null = null;
     hide = true;
     http = inject(HttpClient);
-    authService = inject(AuthService);
-    router = inject(Router);
     registrationForm!: FormGroup;
-    errorMessage: string | null = null;
-    
+    router = inject(Router);
+
     constructor(private fb: FormBuilder) { }
 
     ngOnInit(): void {
@@ -47,7 +47,6 @@ export class RegistrationComponent implements OnInit {
 
     onSubmit() {
         var rawForm = this.registrationForm.getRawValue();
-        console.log(rawForm);
         this.authService
             .register(rawForm.inputEmail, rawForm.inputLogin, rawForm.inputPassword)
             .subscribe({
@@ -57,6 +56,6 @@ export class RegistrationComponent implements OnInit {
                 error: (err) => {
                     this.errorMessage = err.message;
                 }
-        })
+            })
     }
 }
