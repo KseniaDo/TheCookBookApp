@@ -1,0 +1,16 @@
+<div *ngIf="authServiceSignal() == null; else logout_block">
+    <button mat-flat-button (click)="changeState('login')">Войти</button>
+    <button mat-flat-button (click)="changeState('register')">Зарегистрироваться</button>
+    <div *ngIf="authState == 0; else register_form">
+        <app-login></app-login>
+    </div>
+    <ng-template #register_form>
+        <app-registration></app-registration>
+    </ng-template>
+</div>
+<ng-template #logout_block>
+    <div>
+        {{ authServiceSignal()?.email }}
+        <button mat-flat-button (click)="logout()">Выйти</button>
+    </div>
+</ng-template>

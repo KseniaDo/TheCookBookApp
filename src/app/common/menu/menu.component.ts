@@ -16,10 +16,6 @@ import { RouterOutlet, RouterLink } from '@angular/router';
   ]
 })
 export class MenuComponent {
-    // menu_items = [
-    //     'Все рецепты',
-    //     'Создать рецепт'
-    // ];
     @Input() menu_items = [
         {
             route: '/main-page',

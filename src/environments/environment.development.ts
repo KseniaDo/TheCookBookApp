@@ -4,4 +4,13 @@ export const environment = {
     USER_TOKEN_AUTH: '',
     EDGE_CONFIG_ID: '',
     KEY_RECIPE_ELEMENT: '',
+    firebaseConfig: {
+        apiKey: "",
+        authDomain: "",
+        projectId: "",
+        storageBucket: "",
+        messagingSenderId: "",
+        appId: "",
+        measurementId: ""
+    },
 };
