@@ -2,4 +2,7 @@
 **(in development...)**
 ## Features
 - CRUD operations
-- (to be updated)
+- Firebase Auth
+- Vercel deployment
+- Angular, TypeScript
+- Angular Material
